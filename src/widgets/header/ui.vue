@@ -1,6 +1,10 @@
+<script lang="ts" setup>
+import { Container } from "@/shared/container";
+</script>
+
 <template>
   <header class="header">
-      header
+    <Container/>
   </header>
 </template>
 
