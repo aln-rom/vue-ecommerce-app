@@ -2,6 +2,7 @@
 import { Container } from "@/shared/container";
 import { Logo } from '@/shared/logo';
 import { Button } from '@/shared/button';
+import { Icon } from "@/shared/icon";
 
 </script>
 
@@ -16,6 +17,9 @@ import { Button } from '@/shared/button';
       
       <div class="header__container__button">
         <Button color="secondary">
+          <template v-slot:leftIcon>
+            <Icon type="menu" />
+          </template>
           Каталог
         </Button>
       </div>
