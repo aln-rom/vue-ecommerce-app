@@ -24,7 +24,12 @@ const classes = ['button', `size_${size}`, `decoration_${decoration}`, `color_${
 <template>
   <button :class="classes" :disabled="disabled">
     <slot name="leftIcon"></slot>
-    <Typography v-if="slots.default" class="button__text" tagName="p" size="s">
+    <Typography
+      v-if="slots.default"
+      class="button__text"
+      tagName="p"
+      size="s"
+    >
       <slot></slot>
     </Typography>
     <slot name="rightIcon"></slot>
