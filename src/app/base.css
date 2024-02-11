@@ -73,6 +73,10 @@ main {
   display: block;
 }
 
+ul, ol {
+  list-style: none;
+}
+
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
