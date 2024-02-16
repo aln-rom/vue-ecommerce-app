@@ -6,6 +6,7 @@ import { Button } from '@/shared/button';
 import { Icon } from "@/shared/icon";
 import { MainInput } from '@/shared/input';
 import { Navigation } from '@/features/header/navigation';
+import { UserMenu } from '@/features/header/user-menu';
 
 const navItems = reactive<{ label: string; icon: IconType; count: number; link: string; }[]>([
   { label: 'Избранное', icon: 'favorite', count: 0, link: '/favorites' },
@@ -13,6 +14,16 @@ const navItems = reactive<{ label: string; icon: IconType; count: number; link: 
   { label: 'Корзина', icon: 'cart', count: 1, link: '/cart' },
 ]);
 
+const userMenu = reactive({
+  avatar: '',
+  name: 'Алексей',
+  menu: [
+    { label: 'Профиль', link: '/profile' },
+    { label: 'Выйти', action: 'logout' },
+  ],
+});
+
+const login = true;
 const onChangeSearch = (value: string) => console.log(value);
 const onSearch = () => console.log('SEND TO SERVER');
 
@@ -50,9 +61,24 @@ const onSearch = () => console.log('SEND TO SERVER');
           </template>
         </MainInput>
       </div>
-      
       <div class="header__navigation">
         <Navigation :data="navItems" />
+      </div>
+      
+      <div class="header__user-menu">
+        <UserMenu
+          v-if="login"
+          :data="userMenu"
+        />
+        <Button
+          v-else
+          class="header__login-btn"
+        >
+          <template v-slot:rightIcon>
+            <Icon type="login" />
+          </template>
+          Войти
+        </Button>
       </div>
     </Container>
   </header>
@@ -82,6 +108,21 @@ const onSearch = () => console.log('SEND TO SERVER');
     
     &__navigation {
       margin: 0;
+    }
+    
+    &__user-menu {
+      position: relative;
+      width: 217px;
+    }
+    
+    &__user-menu:deep(.user-menu) {
+      position: absolute;
+      top: -28px;
+      width: 100%;
+    }
+    
+    &__login-btn {
+      width: 157px;
     }
   }
 }
