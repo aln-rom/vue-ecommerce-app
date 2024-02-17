@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from "vue";
+import { storeToRefs } from 'pinia';
 import { Container } from "@/shared/container";
 import { Logo } from '@/shared/logo';
 import { Button } from '@/shared/button';
@@ -7,6 +8,11 @@ import { Icon } from "@/shared/icon";
 import { MainInput } from '@/shared/input';
 import { Navigation } from '@/features/header/navigation';
 import { UserMenu } from '@/features/header/user-menu';
+import { usePersonStore } from '@/entities/person';
+
+const personStore = usePersonStore();
+const { person, isAuth } = storeToRefs(personStore);
+const { setIsAuth } = personStore;
 
 const navItems = reactive<{ label: string; icon: IconType; count: number; link: string; }[]>([
   { label: 'Избранное', icon: 'favorite', count: 0, link: '/favorites' },
@@ -15,15 +21,15 @@ const navItems = reactive<{ label: string; icon: IconType; count: number; link: 
 ]);
 
 const userMenu = reactive({
-  avatar: '',
-  name: 'Алексей',
+  avatar: person.value.avatar,
+  name: person.value.name,
   menu: [
     { label: 'Профиль', link: '/profile' },
     { label: 'Выйти', action: 'logout' },
   ],
 });
 
-const login = true;
+const login = () => setIsAuth(true);
 const onChangeSearch = (value: string) => console.log(value);
 const onSearch = () => console.log('SEND TO SERVER');
 
@@ -67,7 +73,7 @@ const onSearch = () => console.log('SEND TO SERVER');
       
       <div class="header__user-menu">
         <UserMenu
-          v-if="login"
+          v-if="isAuth"
           :data="userMenu"
         />
         <Button
