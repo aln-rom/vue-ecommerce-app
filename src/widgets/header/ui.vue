@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { storeToRefs } from 'pinia';
 import { Container } from "@/shared/container";
 import { Logo } from '@/shared/logo';
 import { Button } from '@/shared/button';
 import { Icon } from "@/shared/icon";
 import { MainInput } from '@/shared/input';
+import { DropdownMenu } from '@/features/header/dropdown-menu';
 import { Navigation } from '@/features/header/navigation';
 import { UserMenu } from '@/features/header/user-menu';
 import { usePersonStore } from '@/entities/person';
@@ -28,7 +29,8 @@ const userMenu = reactive({
     { label: 'Выйти', action: 'logout' },
   ],
 });
-
+const dropdownIsHidden = ref(true);
+const toggleDropdownVisibility = () => dropdownIsHidden.value = !dropdownIsHidden.value;
 const login = () => setIsAuth(true);
 const onChangeSearch = (value: string) => console.log(value);
 const onSearch = () => console.log('SEND TO SERVER');
@@ -45,7 +47,7 @@ const onSearch = () => console.log('SEND TO SERVER');
       </div>
       
       <div class="header__container__button">
-        <Button color="secondary">
+        <Button color="secondary" @mouseup="toggleDropdownVisibility">
           <template v-slot:leftIcon>
             <Icon type="menu" />
           </template>
@@ -86,6 +88,9 @@ const onSearch = () => console.log('SEND TO SERVER');
           Войти
         </Button>
       </div>
+      
+      <DropdownMenu v-if="!dropdownIsHidden" @mouseleave="toggleDropdownVisibility" />
+    
     </Container>
   </header>
 </template>
