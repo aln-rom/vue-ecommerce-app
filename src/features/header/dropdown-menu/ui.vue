@@ -1,26 +1,11 @@
 <script lang="ts" setup>
 import { RouterLink } from 'vue-router';
-import { reactive } from "vue";
+import { useCatalogStore } from '@/entities/catalog';
 import { Container } from '@/shared/container';
 import { Typography } from '@/shared/typography';
 
-const catalog = reactive({
-  sections: [
-    { label: 'Молоко, сыр, яйцо', link: '/section' },
-    { label: 'Напитки', link: '/section' },
-    { label: 'Бакалея', link: '/section' },
-    { label: 'Непродовольственные товары', link: '/section' },
-    { label: 'Хлеб', link: '/section' },
-    { label: 'Кондитерские изделия', link: '/section' },
-    { label: 'Здоровое питание', link: '/section' },
-    { label: 'Детское питание', link: '/section' },
-    { label: 'Фрукты и овощи', link: '/section' },
-    { label: 'Чай, кофе', link: '/section' },
-    { label: 'Зоотовары', link: '/section' },
-    { label: 'Мясо, птица, колбаса', link: '/section' },
-    { label: 'Замороженные продукты', link: '/section' },
-  ]
-});
+const catalogStore = useCatalogStore();
+const { catalogSections } = catalogStore;
 </script>
 
 <template>
@@ -28,7 +13,7 @@ const catalog = reactive({
     <Container>
       <ul class="dropdown-menu__list">
         <li
-          v-for="section in catalog.sections"
+          v-for="section in catalogSections"
           :key="section.label"
           class="list__item"
         >
