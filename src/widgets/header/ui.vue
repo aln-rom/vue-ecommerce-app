@@ -10,7 +10,10 @@ import { DropdownMenu } from '@/features/header/dropdown-menu';
 import { Navigation } from '@/features/header/navigation';
 import { UserMenu } from '@/features/header/user-menu';
 import { usePersonStore } from '@/entities/person';
+import { useScreenStore } from '@/entities/screen';
 
+const screenStore = useScreenStore();
+const { platform } = storeToRefs(screenStore);
 const personStore = usePersonStore();
 const { person, isAuth } = storeToRefs(personStore);
 const { setIsAuth } = personStore;
@@ -42,7 +45,7 @@ const onSearch = () => console.log('SEND TO SERVER');
     <Container class="header__container">
       <div class="header__container__logo">
         <RouterLink to="/">
-          <Logo orientation="horizontal" bgColor="white" colorful with-text/>
+          <Logo orientation="horizontal" bgColor="white" colorful :withText="platform === 'desktop'" />
         </RouterLink>
       </div>
       
@@ -137,4 +140,66 @@ const onSearch = () => console.log('SEND TO SERVER');
     }
   }
 }
+
+@media screen and (max-width: 1207px) {
+  .header__container {
+    grid-gap: 20px;
+  }
+  
+  .header__catalog {
+    width: unset;
+    margin-left: unset;
+  }
+  
+  .header__login-btn {
+    width: max-content;
+  }
+  
+  .header__login-btn:deep(.typography),
+  .header__catalog:deep(.typography) {
+    display: none;
+  }
+  
+  .header__catalog:deep(.button) {
+    width: max-content;
+  }
+  
+  .header__search {
+    margin-left: unset;
+  }
+  
+  .header__user-menu {
+    width: 56px;
+  }
+  
+  .header__user-menu:deep(.user-menu) {
+    width: max-content;
+  }
+  
+  .header__navigation {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header__navigation,
+  .header__user-menu,
+  .header__catalog {
+    display: none;
+  }
+  
+  .header__logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header__logo:deep(svg) {
+    width: 39px;
+  }
+  
+  .header__search {
+    width: 100%;
+  }
+}
+
 </style>
